@@ -58,14 +58,16 @@ else if (resp == "2")
         string[] hoursOfSleep = parts[1].Split('|');
 
         Console.WriteLine("{0}{1}", "Week of ", startDate.ToString("MMM, dd, yyyy"));
-        Console.WriteLine("{0,3}{1,3}{2,3}{3,3}{4,3}{5,3}{6,3}", "Su", "Mo", "Tu", "We", "Th", "Fr", " Sa");
-        Console.WriteLine("{0,3}{1,3}{2,3}{3,3}{4,3}{5,3}{6,3}", "--", "--", "--", "--", "--", "--", "--");
+        Console.WriteLine("{0,3}{1,3}{2,3}{3,3}{4,3}{5,3}{6,3}{7,4}{8,4}", "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Tot", "Avg");
+        Console.WriteLine("{0,3}{1,3}{2,3}{3,3}{4,3}{5,3}{6,3}{7,4}{8,4}", "--", "--", "--", "--", "--", "--", "--", "---", "---");
 
+        int totalHours = 0;
         for (int i = 0; i < hoursOfSleep.Length; i++)
         {
- 
-            Console.Write("{0,3}", hoursOfSleep[i]);
-            Console.Write(i < hoursOfSleep.Length - 1 ? "" : "\n");
+            int hours = int.Parse(hoursOfSleep[i]);
+            totalHours += hours;
+            Console.Write("{0,3}", hours);
+            Console.Write(i < hoursOfSleep.Length - 1 ? "" : $"{totalHours,4}{totalHours / (i + 1),4:F1}\n");
         }
         Console.WriteLine();
     }
