@@ -15,13 +15,13 @@ if (resp == "1")
     // input the response (convert to int)
     int weeks = int.Parse(Console.ReadLine());
 
-     // determine start and end date
+    // determine start and end date
     DateTime today = DateTime.Now;
     // we want full weeks sunday - saturday
     DateTime dataEndDate = today.AddDays(-(int)today.DayOfWeek);
     // subtract # of weeks from endDate to get startDate
     DateTime dataDate = dataEndDate.AddDays(-(weeks * 7));
-    
+
     // random number generator
     Random rnd = new Random();
 
@@ -40,15 +40,33 @@ if (resp == "1")
         }
         // M/d/yyyy,#|#|#|#|#|#|#
         // Console.WriteLine($"{dataDate:M/d/yy},{string.Join("|", hours)}");
-        sw.WriteLine($"{dataDate:M/d/yyyy},{string.Join("|", hours)}");        
+        sw.WriteLine($"{dataDate:M/d/yyyy},{string.Join("|", hours)}");
         // add 1 week to date
         dataDate = dataDate.AddDays(7);
     }
-    
+
     sw.Close();
 }
+
 else if (resp == "2")
 {
-    // TODO: parse data file
+    string[] lines = File.ReadAllLines("data.txt");
+    foreach (string line in lines)
+    {
+        string[] parts = line.Split(',');
+        DateTime startDate = DateTime.Parse(parts[0]);
+        string[] hoursOfSleep = parts[1].Split('|');
 
+        Console.WriteLine("{0}{1}", "Week of ", startDate.ToString("MMM, dd, yyyy"));
+        Console.WriteLine("{0,3}{1,3}{2,3}{3,3}{4,3}{5,3}{6,3}", "Su", "Mo", "Tu", "We", "Th", "Fr", " Sa");
+        Console.WriteLine("{0,3}{1,3}{2,3}{3,3}{4,3}{5,3}{6,3}", "--", "--", "--", "--", "--", "--", "--");
+
+        for (int i = 0; i < hoursOfSleep.Length; i++)
+        {
+ 
+            Console.Write("{0,3}", hoursOfSleep[i]);
+            Console.Write(i < hoursOfSleep.Length - 1 ? "" : "\n");
+        }
+        Console.WriteLine();
+    }
 }
